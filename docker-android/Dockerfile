@@ -79,12 +79,12 @@ RUN chmod +x /opt/*.sh
 COPY frida-server-16.5.6-android-x86 /opt/
 
 # Install Google Cloud SDK
-RUN wget -qO- https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz | tar zxv -C /app && \
-    /app/google-cloud-sdk/install.sh --usage-reporting=false \
+RUN wget -qO- https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz | tar zxv -C /opt && \
+    /opt/google-cloud-sdk/install.sh --usage-reporting=false \
         --bash-completion=false \
         --disable-installation-options
 
-ENV PATH=/app/google-cloud-sdk/bin/:$PATH
+ENV PATH=/opt/google-cloud-sdk/bin/:$PATH
 RUN git config --system credential.helper gcloud.sh
 
 RUN gcloud storage cp gs://datarangers_scraping/android_apk/traveloka-5-4-1.apk /opt/
