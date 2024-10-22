@@ -15,4 +15,3 @@ if [ "$INSTALL_ANDROID_SDK" == "1" ]; then
   yes | sdkmanager --licenses && \
   sdkmanager --install "$PACKAGE_PATH" "$ANDROID_PLATFORM_VERSION" platform-tools emulator
 fi
-
