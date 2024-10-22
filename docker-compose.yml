@@ -16,6 +16,9 @@ services:
       - /dev/kvm
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - android-net
+
   frida-service:
     build:
       context: .
@@ -23,4 +26,9 @@ services:
       - 8080:8080
     depends_on:
       - android-emulator
+    networks:
+      - android-net
 
+networks:
+  android-net:
+    driver: bridge
