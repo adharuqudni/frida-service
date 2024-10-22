@@ -67,7 +67,6 @@ RUN mkdir /root/.android/ && \
 	mkdir /data
 
 # Exporting ADB keys.
-COPY keys/* /root/.android/
 
 ENV NODE_VERSION=20.16.0
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
