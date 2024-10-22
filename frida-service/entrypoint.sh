@@ -9,8 +9,8 @@ RETRY_DELAY=20
 # Attempt to connect to ADB, retrying if it fails
 for i in $(seq 1 $MAX_RETRIES)
 do
-    adb connect 127.0.0.1:5555
-    connected=$(adb devices | grep '127.0.0.1:5555')
+    adb connect android-emulator:5555
+    connected=$(adb devices | grep 'android-emulator:5555')
 
     if [ -n "$connected" ]; then
         echo "ADB connected successfully on attempt $i."
@@ -22,7 +22,7 @@ do
 done
 
 # Final check to ensure connection was successful before proceeding
-connected=$(adb devices | grep '127.0.0.1:5555')
+connected=$(adb devices | grep 'android-emulator:5555')
 if [ -z "$connected" ]; then
     echo "Failed to connect to ADB after $MAX_RETRIES attempts."
     exit 1

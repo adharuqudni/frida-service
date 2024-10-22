@@ -19,6 +19,8 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - android-net
+    hostname: android-emulator
+
 
   frida-service:
     build:
