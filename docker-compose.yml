@@ -14,7 +14,7 @@ services:
       - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
       - ./docker-android/android_avd:/data
     devices:
-      - "/dev/kvm:/dev/kvm"
+      - /dev/kvm:/dev/kvm
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

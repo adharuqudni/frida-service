@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 echo "Starting the ADB server and attempting to connect to emulator ..."
 
 # Number of retries and delay between retries
