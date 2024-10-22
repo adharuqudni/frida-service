@@ -63,8 +63,7 @@ RUN mkdir /root/.android/ && \
 	touch /root/.android/repositories.cfg && \
 	mkdir /data
 
-# Exporting ADB keys.
-COPY keys/* /root/.android/
+
 
 # The following layers will download the Android command-line tools
 # to install the Android SDK, emulator and system images.
