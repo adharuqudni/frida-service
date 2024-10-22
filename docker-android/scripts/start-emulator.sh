@@ -71,6 +71,7 @@ emulator \
   -memory $OPT_MEMORY \
   -no-boot-anim \
   -no-accel \
+  -no-audio \
   -writable-system \
   -no-window \
   -no-snapshot  || update_state "ANDROID_STOPPED"
