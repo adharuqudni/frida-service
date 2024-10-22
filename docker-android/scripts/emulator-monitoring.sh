@@ -53,11 +53,11 @@ function wait_for_boot() {
   hidden_policy
   sleep 1
   fi
-  adb root
-  sleep 1
-  adb install /opt/traveloka-5-4-1.apk
-  adb push /opt/frida-server-16.5.6-android-x86 /data/local/tmp/frida-server
-  adb shell chmod 755 /data/local/tmp/frida-server
-  adb shell /data/local/tmp/frida-server &
-  update_state "ANDROID_READY"
+  adb root && \
+  sleep 1 && \
+  adb install /opt/traveloka-5-4-1.apk && \
+  adb push /opt/frida-server-16.5.6-android-x86 /data/local/tmp/frida-server && \
+  adb shell chmod 755 /data/local/tmp/frida-server && \
+  adb shell /data/local/tmp/frida-server && \
+  update_state "ANDROID_READY" 
 }
