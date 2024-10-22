@@ -1,0 +1,26 @@
+version: "4"
+services:
+  android-emulator:
+    build:
+      context: ./docker-android
+    ports:
+      - 5554:5554
+      - 5555:5555
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
+      - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
+      - ./docker-android/android_avd:/data
+      - /dev/kvm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  frida-service:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - android-emulator
+
