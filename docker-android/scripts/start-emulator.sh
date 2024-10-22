@@ -73,7 +73,6 @@ emulator \
   -no-boot-anim \
   -cores $OPT_CORES \
   -ranchu \
-  -no-accel \
   -writable-system \
   $AUTH_FLAG \
   -no-window \
