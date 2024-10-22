@@ -91,5 +91,8 @@ COPY . /opt/
 
 RUN npm install
 
+COPY ./entrypoint.sh /opt/
+RUN chmod +x /opt/*.sh
+
 # Set the entrypoint
-CMD ["node ./fridaService.js"]
+ENTRYPOINT ["/opt/entrypoint.sh"]

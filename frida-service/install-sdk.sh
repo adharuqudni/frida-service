@@ -14,5 +14,4 @@ if [ "$INSTALL_ANDROID_SDK" == "1" ]; then
   rm /tmp/commandlinetools-linux-${CMD_LINE_VERSION}.zip && \
   yes | sdkmanager --licenses && \
   sdkmanager --install "$PACKAGE_PATH" "$ANDROID_PLATFORM_VERSION" platform-tools emulator && \
-  adb connect $ADB_HOST:$ADB_PORT"
 fi
