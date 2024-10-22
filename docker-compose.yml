@@ -21,7 +21,7 @@ services:
 
   frida-service:
     build:
-      context: .
+      context: ./frida-service
     ports:
       - 8080:8080
     depends_on:
