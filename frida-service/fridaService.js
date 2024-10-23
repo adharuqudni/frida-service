@@ -81,6 +81,14 @@ app.get("/", (req, res) => {
   res.send(lastToken);
 });
 
+app.get("/health", (req, res) => {
+  if(lastToken != null){
+    res.status(200).send("Healthy");
+  } else {
+    res.status(204).send("Empty, still running");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
