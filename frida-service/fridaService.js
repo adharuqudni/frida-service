@@ -26,12 +26,11 @@ const messagePool = [];
 function onMessage(message, data) {
   if (message.type === "send") {
     messagePool.push(message.payload);
-    // const logging = {
-    //   timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
-    //   token: message.payload
-    // }
-    // fs.writeFileSync('./okhttp3.json', JSON.stringify(messagePool))
-    // console.log('Token',logging);
+    const logging = {
+      timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+      token: message.payload
+    }
+    console.log(logging);
   } else if (message.type === "error") {
     console.error(message.stack);
   }
@@ -44,7 +43,7 @@ async function run() {
       "utf8"
     );
     let device;
-    for (const retry of _.range(0, 9999)) {
+     for (const retry of _.range(0, 9999)) {
       try {
         device = await frida.getUsbDevice();
         current.device = device;
