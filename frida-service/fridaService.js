@@ -50,6 +50,7 @@ async function run() {
         current.device = device;
         console.log("[*] spawn()");
         pid = await device.spawn("com.traveloka.android");
+        break
       } catch (err) {
         console.log("error message:", err.message);
         await sleep(10000);
