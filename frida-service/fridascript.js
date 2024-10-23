@@ -212,9 +212,9 @@ setTimeout(function () {
           console.log("request..");
         },
       });
-    }, 1000);
+    }, 5000);
   });
-}, 1000*60*15);
+}, 1000*60*1);
 
 function returner(typeName) {
   // This is a improvable rudimentary fix, if not works you can patch it manually
