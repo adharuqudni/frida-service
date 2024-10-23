@@ -52,7 +52,7 @@ async function run() {
         break
       } catch (err) {
         console.log("error message:", err.message);
-        await sleep(10000);
+        await sleep(1000);
       }
     }
 
