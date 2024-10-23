@@ -43,17 +43,18 @@ async function run() {
       "utf8"
     );
     let device;
+    let pid;
      for (const retry of _.range(0, 9999)) {
       try {
         device = await frida.getUsbDevice();
         current.device = device;
+        console.log("[*] spawn()");
+        pid = await device.spawn("com.traveloka.android");
       } catch (err) {
         console.log("error message:", err.message);
         await sleep(10000);
       }
     }
-    console.log("[*] spawn()");
-    const pid = await device.spawn("com.traveloka.android");
 
     current.pid = pid;
 
