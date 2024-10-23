@@ -52,18 +52,15 @@ async function run() {
     
       console.log(`[*] attach(${pid})`);
       const session = await device.attach(pid);
-      await sleep(10000)
 
       session.detached.connect(reason => {
         console.log('Detached:', reason);
       });
-      await sleep(10000)
 
       const script = await session.createScript(source);
       script.message.connect(onMessage);
       await script.load();
       console.log(`[*] resume(${pid})`);
-      await sleep(10000)
 
       await device.resume(pid);
     }catch(err){
