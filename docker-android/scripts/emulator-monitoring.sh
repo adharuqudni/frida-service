@@ -53,6 +53,7 @@ function wait_for_boot() {
   hidden_policy
   sleep 1
   fi
+  sleep 5 && \
   adb root && \
   sleep 1 && \
   adb install /opt/traveloka-5-4-1.apk && \
