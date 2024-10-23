@@ -4,6 +4,7 @@ const path = require('path');
 const util = require('util');
 const moment = require('moment');
 const express = require('express')
+const _ = require('lodash');
 const app = express()
 const port = 3000
 const readFile = util.promisify(fs.readFile);
@@ -38,25 +39,32 @@ function onMessage(message, data) {
 }
 
 async function run() {
-  while (true) {
+  for (const retry of _.range(0, 9999)){
     try{
       const source = await readFile(path.join(__dirname, 'fridascript.js'), 'utf8');
       const device = await frida.getUsbDevice();
       current.device = device;
       console.log('[*] spawn()');
       const pid = await device.spawn('com.traveloka.android');
+      await sleep(10000)
+
       current.pid = pid;
     
       console.log(`[*] attach(${pid})`);
       const session = await device.attach(pid);
-    
+      await sleep(10000)
+
       session.detached.connect(reason => {
         console.log('Detached:', reason);
       });
+      await sleep(10000)
+
       const script = await session.createScript(source);
       script.message.connect(onMessage);
       await script.load();
       console.log(`[*] resume(${pid})`);
+      await sleep(10000)
+
       await device.resume(pid);
     }catch(err){
       console.log("error message:", err.message);

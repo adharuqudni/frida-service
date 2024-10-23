@@ -213,7 +213,7 @@ setTimeout(function () {
       });
     }, 1000);
   });
-}, 10000);
+}, 5000);
 
 function returner(typeName) {
   // This is a improvable rudimentary fix, if not works you can patch it manually
