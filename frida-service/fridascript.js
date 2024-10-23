@@ -11,6 +11,7 @@ setTimeout(function () {
    * @param {any} function(
    * @returns {any}
    */
+  console.log('starting')
   Java.perform(function () {
    
     // const groups = Java.enumerateMethods('*android.content.Context*!*')
@@ -213,7 +214,7 @@ setTimeout(function () {
       });
     }, 1000);
   });
-}, 1000*60*2);
+}, 1000*60*15);
 
 function returner(typeName) {
   // This is a improvable rudimentary fix, if not works you can patch it manually
