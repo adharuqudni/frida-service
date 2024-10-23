@@ -46,7 +46,7 @@ async function run() {
       current.device = device;
       console.log('[*] spawn()');
       const pid = await device.spawn('com.traveloka.android');
-      await sleep(10000)
+      await sleep(60*1000)
 
       current.pid = pid;
     
