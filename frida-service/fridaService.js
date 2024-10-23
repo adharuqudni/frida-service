@@ -22,10 +22,9 @@ function sleep(ms) {
 function onError(error) {
   console.error(error.stack);
 }
-const messagePool = [];
 function onMessage(message, data) {
   if (message.type === "send") {
-    messagePool.push(message.payload);
+    lastToken = message.payload
     const logging = {
       timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
       token: message.payload
