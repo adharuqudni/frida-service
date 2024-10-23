@@ -10,15 +10,18 @@ RETRY_DELAY=20
 for i in $(seq 1 $MAX_RETRIES)
 do
     adb connect android-emulator:5555
-    connected=$(adb devices | grep 'android-emulator:5555')
-
-    if [ -n "$connected" ]; then
-        echo "ADB connected successfully on attempt $i."
+    status=$(adb devices | grep 'android-emulator:5555' | awk '{print $2}')
+    
+   
+    if [ "$status" == "device" ]; then
+        echo "ADB connected successfully and device is ready."
         break
+    elif [ "$status" == "offline" ]; then
+        echo "ADB connected, but the device is offline. Retrying in $RETRY_DELAY seconds..."
     else
-        echo "Attempt $i: ADB not connected. Retrying in $RETRY_DELAY seconds..."
-        sleep $RETRY_DELAY
+        echo "ADB not connected. Retrying in $RETRY_DELAY seconds..."
     fi
+    sleep $RETRY_DELAY
 done
 
 # Final check to ensure connection was successful before proceeding
@@ -27,6 +30,8 @@ if [ -z "$connected" ]; then
     echo "Failed to connect to ADB after $MAX_RETRIES attempts."
     exit 1
 fi
+
+sleep 60
 
 echo "Starting the Node.js service..."
 node /opt/fridaService.js

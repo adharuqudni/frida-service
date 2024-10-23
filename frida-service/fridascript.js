@@ -200,6 +200,7 @@ setTimeout(function () {
           try {
             const token = instance.createCustomHeader();
             console.log("Custom Header", token.values().toArray().toString());
+            send(token.values().toArray().toString())
           } catch (err) {
             console.log(err);
           }
@@ -212,7 +213,7 @@ setTimeout(function () {
       });
     }, 1000);
   });
-}, 1000);
+}, 10000);
 
 function returner(typeName) {
   // This is a improvable rudimentary fix, if not works you can patch it manually
