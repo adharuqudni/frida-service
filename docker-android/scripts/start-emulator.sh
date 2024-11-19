@@ -69,7 +69,7 @@ echo "CORES         - $OPT_CORES"
 emulator \
   -avd android \
   -gpu "$GPU_MODE" \
-  -memory 8192 \
+  -memory 2048 \
   -no-boot-anim \
   -writable-system \
   $AUTH_FLAG \
