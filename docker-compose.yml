@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  android-emulator:
+  android-emulator-1:
     build:
       context: ./docker-android
     ports:
@@ -12,15 +12,75 @@ services:
     volumes:
       - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
       - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
-      - ./docker-android/android_avd:/data
+      - ./docker-android/android_avd_1:/data
     devices:
       - /dev/kvm:/dev/kvm
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - android-net
-    hostname: android-emulator
+    hostname: android-emulator-1
 
+  android-emulator-2:
+    build:
+      context: ./docker-android
+    ports:
+      - 5553:5554
+      - 5552:5555
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
+      - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
+      - ./docker-android/android_avd:_2/data
+    devices:
+      - /dev/kvm:/dev/kvm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - android-net
+    hostname: android-emulator-2
+  android-emulator-3:
+    build:
+      context: ./docker-android
+    ports:
+      - 5551:5554
+      - 5550:5555
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
+      - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
+      - ./docker-android/android_avd:_3/data
+    devices:
+      - /dev/kvm:/dev/kvm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - android-net
+    hostname: android-emulator-3
+  android-emulator-4:
+    build:
+      context: ./docker-android
+    ports:
+      - 5549:5554
+      - 5548:5555
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
+      - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
+      - ./docker-android/android_avd:_4/data
+    devices:
+      - /dev/kvm:/dev/kvm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - android-net
+    hostname: android-emulator-4
 
   frida-service:
     build:
