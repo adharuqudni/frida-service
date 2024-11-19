@@ -24,11 +24,11 @@ function onError(error) {
 }
 function onMessage(message, data) {
   if (message.type === "send") {
-    lastToken = message.payload
+    lastToken = message.payload;
     const logging = {
-      timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
-      token: message.payload
-    }
+      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+      token: message.payload,
+    };
     console.log(logging);
   } else if (message.type === "error") {
     console.error(message.stack);
@@ -43,13 +43,14 @@ async function run() {
     );
     let device;
     let pid;
-     for (const retry of _.range(0, 9999)) {
+    for (const retry of _.range(0, 9999)) {
       try {
         device = await frida.getUsbDevice();
+        console.log(await frida.enumerateDevices());
         current.device = device;
         console.log("[*] spawn()");
         pid = await device.spawn("com.traveloka.android");
-        break
+        break;
       } catch (err) {
         console.log("error message:", err.message);
         await sleep(1000);
@@ -82,7 +83,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  if(lastToken != null){
+  if (lastToken != null) {
     res.status(200).send("Healthy");
   } else {
     res.status(204).send("Empty, still running");
