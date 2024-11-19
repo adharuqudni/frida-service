@@ -88,7 +88,11 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - android-emulator
+      - android-emulator-1
+      - android-emulator-2
+      - android-emulator-3
+      - android-emulator-4
+
     networks:
       - android-net
 
