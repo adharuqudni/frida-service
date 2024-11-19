@@ -33,7 +33,7 @@ services:
     volumes:
       - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
       - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
-      - ./docker-android/android_avd:_2/data
+      - ./docker-android/android_avd_2:/data
     devices:
       - /dev/kvm:/dev/kvm
     extra_hosts:
@@ -53,7 +53,7 @@ services:
     volumes:
       - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
       - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
-      - ./docker-android/android_avd:_3/data
+      - ./docker-android/android_avd_3:/data
     devices:
       - /dev/kvm:/dev/kvm
     extra_hosts:
@@ -73,7 +73,7 @@ services:
     volumes:
       - ./docker-android/keys/adbkey:/root/.android/adbkey:ro
       - ./docker-android/keys/adbkey.pub:/root/.android/adbkey.pub:ro
-      - ./docker-android/android_avd:_4/data
+      - ./docker-android/android_avd_4:/data
     devices:
       - /dev/kvm:/dev/kvm
     extra_hosts:
