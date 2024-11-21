@@ -1,4 +1,4 @@
-version: "3.3"  # Use version 3.8 or higher for health checks
+version: "3.4"  # Use version 3.8 or higher for health checks
 services:
   android-emulator-1:
     build:
