@@ -46,10 +46,9 @@ async function run() {
     for (const retry of _.range(0, 9999)) {
       try {
         device = await frida.getUsbDevice();
-        console.log(await frida.enumerateDevices());
-        current.device = device;
-        console.log("[*] spawn()");
-        pid = await device.spawn("com.traveloka.android");
+        // current.device = device;
+        // console.log("[*] spawn()");
+        // pid = await device.spawn("com.traveloka.android");
         break;
       } catch (err) {
         console.log("error message:", err.message);
@@ -57,21 +56,37 @@ async function run() {
       }
     }
 
-    current.pid = pid;
+    const deviceCollection = (await frida.enumerateDevices()).filter(
+      (device) => device.type === "usb"
+    );
+    for (const [index, device] of deviceCollection.entries()) {
+      try{
+        console.log(device);
+        console.log("[*] spawn()");
+        pid = await device.spawn("com.traveloka.android");
+  
+        current.pid = pid;
+  
+        console.log(`[*] attach(${pid})`);
+        const session = await device.attach(pid);
+  
+        session.detached.connect((reason) => {
+          console.log("Detached:", reason);
+        });
 
-    console.log(`[*] attach(${pid})`);
-    const session = await device.attach(pid);
-
-    session.detached.connect((reason) => {
-      console.log("Detached:", reason);
-    });
-
-    const script = await session.createScript(source);
-    script.message.connect(onMessage);
-    await script.load();
-    console.log(`[*] resume(${pid})`);
-
-    await device.resume(pid);
+        const modifiedScript = source.replace(/{identifierDeviceNumber}/g, index)
+  
+        const script = await session.createScript(modifiedScript);
+        script.message.connect(onMessage);
+        await script.load();
+        console.log(`[*] resume(${pid})`);
+  
+        await device.resume(pid);
+      }catch(err){
+        console.log(err)
+      }
+     
+    }
   } catch (err) {
     console.log("error message:", err.message);
     await sleep(10000);

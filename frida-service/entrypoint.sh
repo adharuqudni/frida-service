@@ -9,7 +9,10 @@ RETRY_DELAY=20
 # Attempt to connect to ADB, retrying if it fails
 for i in $(seq 1 $MAX_RETRIES)
 do
-    adb connect android-emulator:5555
+    adb connect android-emulator-1:5555
+    adb connect android-emulator-2:5555
+    adb connect android-emulator-3:5555
+    adb connect android-emulator-4:5555
     status=$(adb devices | grep 'android-emulator:5555' | awk '{print $2}')
     
    
