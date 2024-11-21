@@ -53,9 +53,9 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
-      android-emulator-1:
-        condition: service_healthy
+    depends_on:
+      - android-emulator-1:
+          condition: service_healthy
 
   android-emulator-3:
     build:
@@ -83,9 +83,9 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
-      android-emulator-2:
-        condition: service_healthy
+    depends_on:
+      - android-emulator-2:
+          condition: service_healthy
 
   android-emulator-4:
     build:
@@ -113,9 +113,9 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
-      android-emulator-2:
-        condition: service_healthy
+    depends_on:
+      - android-emulator-3:
+          condition: service_healthy
 
   frida-service:
     build:
@@ -123,14 +123,14 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      android-emulator-1:
-        condition: service_healthy
-      android-emulator-2:
-        condition: service_healthy
-      android-emulator-3:
-        condition: service_healthy
-      android-emulator-4:
-        condition: service_healthy
+      - android-emulator-1:
+          condition: service_healthy
+      - android-emulator-2:
+          condition: service_healthy
+      - android-emulator-3:
+          condition: service_healthy
+      - android-emulator-4:
+          condition: service_healthy
     networks:
       - android-net
 
