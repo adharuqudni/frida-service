@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.3"  # Use version 3.8 or higher for health checks
 services:
   android-emulator-1:
     build:
@@ -20,6 +20,12 @@ services:
     networks:
       - android-net
     hostname: android-emulator-1
+    healthcheck:
+      test: ["CMD", "adb", "wait-for-device"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
 
   android-emulator-2:
     build:
@@ -41,6 +47,16 @@ services:
     networks:
       - android-net
     hostname: android-emulator-2
+    healthcheck:
+      test: ["CMD", "adb", "wait-for-device"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      android-emulator-1:
+        condition: service_healthy
+
   android-emulator-3:
     build:
       context: ./docker-android
@@ -61,6 +77,16 @@ services:
     networks:
       - android-net
     hostname: android-emulator-3
+    healthcheck:
+      test: ["CMD", "adb", "wait-for-device"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      android-emulator-2:
+        condition: service_healthy
+
   android-emulator-4:
     build:
       context: ./docker-android
@@ -81,6 +107,15 @@ services:
     networks:
       - android-net
     hostname: android-emulator-4
+    healthcheck:
+      test: ["CMD", "adb", "wait-for-device"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      android-emulator-2:
+        condition: service_healthy
 
   frida-service:
     build:
@@ -88,11 +123,14 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - android-emulator-1
-      - android-emulator-2
-      - android-emulator-3
-      - android-emulator-4
-
+      android-emulator-1:
+        condition: service_healthy
+      android-emulator-2:
+        condition: service_healthy
+      android-emulator-3:
+        condition: service_healthy
+      android-emulator-4:
+        condition: service_healthy
     networks:
       - android-net
 
