@@ -3,7 +3,7 @@
 echo "Starting the ADB server and attempting to connect to emulator ..."
 
 # Number of retries and delay between retries
-MAX_RETRIES=10
+MAX_RETRIES=30
 RETRY_DELAY=20
 
 # Attempt to connect to ADB, retrying if it fails
