@@ -1,4 +1,4 @@
-version: "3" # Use version 3.8 or higher for health checks
+version: "3.5" # Use version 3.8 or higher for health checks
 services:
   android-emulator-1:
     build:
@@ -25,6 +25,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 30
+      start_period: 30s
+
 
   android-emulator-2:
     build:
@@ -51,10 +53,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 30
+      start_period: 30s
 
     depends_on:
-      android-emulator-1:
-        condition: service_healthy
+      - android-emulator-1
 
   android-emulator-3:
     build:
@@ -81,10 +83,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 30
+      start_period: 30s
 
     depends_on:
-      android-emulator-2:
-        condition: service_healthy
+      - android-emulator-2
 
   android-emulator-4:
     build:
@@ -111,10 +113,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 30
+      start_period: 30s
 
     depends_on:
-      android-emulator-2:
-        condition: service_healthy
+      - android-emulator-3
 
   frida-service:
     build:
@@ -122,14 +124,10 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      android-emulator-1:
-        condition: service_healthy
-      android-emulator-2:
-        condition: service_healthy
-      android-emulator-3:
-        condition: service_healthy
-      android-emulator-4:
-        condition: service_healthy
+      - android-emulator-1
+      - android-emulator-2
+      - android-emulator-3
+      - android-emulator-4
     networks:
       - android-net
 
