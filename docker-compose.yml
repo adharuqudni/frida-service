@@ -26,8 +26,6 @@ services:
       timeout: 10s
       retries: 10
       start_period: 40s
-      start_interval: 5s
-
 
   android-emulator-2:
     build:
@@ -55,8 +53,6 @@ services:
       timeout: 10s
       retries: 10
       start_period: 40s
-      start_interval: 5s
-
     depends_on:
       android-emulator-1:
         condition: "service_healthy"
@@ -87,8 +83,6 @@ services:
       timeout: 10s
       retries: 10
       start_period: 40s
-      start_interval: 5s
-
     depends_on:
       android-emulator-2:
         condition: "service_healthy"
@@ -119,8 +113,6 @@ services:
       timeout: 10s
       retries: 10
       start_period: 40s
-      start_interval: 5s
-
     depends_on:
       android-emulator-3:
         condition: "service_healthy"
