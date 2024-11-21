@@ -1,4 +1,4 @@
-version: "3.6"  # Use version 3.8 or higher for health checks
+version: "3"  # Use version 3.8 or higher for health checks
 services:
   android-emulator-1:
     build:
@@ -53,7 +53,7 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
+    depends_on:
       android-emulator-1:
         condition: service_healthy
 
@@ -83,7 +83,7 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
+    depends_on:
       android-emulator-2:
         condition: service_healthy
 
@@ -113,7 +113,7 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
-    depend_on:
+    depends_on:
       android-emulator-2:
         condition: service_healthy
 
