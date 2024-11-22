@@ -102,7 +102,7 @@ async function run() {
 }
 
 app.get("/", (req, res) => {
-  const index = req.query.index;
+  const index = req.query.index || 0;
   res.send(tokenCollection[index]);
 });
 
