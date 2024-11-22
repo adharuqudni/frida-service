@@ -1,4 +1,4 @@
-version: "3.9"  # Use version 3.8 or higher for health checks
+version: "3.9" # Use version 3.8 or higher for health checks
 services:
   android-emulator-1:
     build:
@@ -21,11 +21,11 @@ services:
       - android-net
     hostname: android-emulator-1
     healthcheck:
-      test: ["CMD", "adb", "wait-for-device"]
+      test: [ "CMD", "adb", "wait-for-device" ]
       interval: 1m30s
       timeout: 10s
       retries: 10
-      start_period: 40s
+      start_period: 2m30s
 
   android-emulator-2:
     build:
@@ -48,11 +48,11 @@ services:
       - android-net
     hostname: android-emulator-2
     healthcheck:
-      test: ["CMD", "adb", "wait-for-device"]
+      test: [ "CMD", "adb", "wait-for-device" ]
       interval: 1m30s
       timeout: 10s
       retries: 10
-      start_period: 40s
+      start_period: 2m30s
     depends_on:
       android-emulator-1:
         condition: "service_healthy"
@@ -78,11 +78,11 @@ services:
       - android-net
     hostname: android-emulator-3
     healthcheck:
-      test: ["CMD", "adb", "wait-for-device"]
+      test: [ "CMD", "adb", "wait-for-device" ]
       interval: 1m30s
       timeout: 10s
       retries: 10
-      start_period: 40s
+      start_period: 2m30s
     depends_on:
       android-emulator-2:
         condition: "service_healthy"
@@ -108,11 +108,11 @@ services:
       - android-net
     hostname: android-emulator-4
     healthcheck:
-      test: ["CMD", "adb", "wait-for-device"]
+      test: [ "CMD", "adb", "wait-for-device" ]
       interval: 1m30s
       timeout: 10s
       retries: 10
-      start_period: 40s
+      start_period: 2m30s
     depends_on:
       android-emulator-3:
         condition: "service_healthy"
