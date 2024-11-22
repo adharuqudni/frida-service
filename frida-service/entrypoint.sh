@@ -10,10 +10,10 @@ RETRY_DELAY=20
 for i in $(seq 1 $MAX_RETRIES)
 do
     adb connect android-emulator-1:5555
-    adb connect android-emulator-2:5552
-    adb connect android-emulator-3:5550
-    adb connect android-emulator-4:5548
-    status=$(adb devices | grep 'android-emulator-4:5548' | awk '{print $2}')
+    adb connect android-emulator-2:5555
+    adb connect android-emulator-3:5555
+    adb connect android-emulator-4:5555
+    status=$(adb devices | grep 'android-emulator-4:5555' | awk '{print $2}')
     
    
     if [ "$status" == "device" ]; then
@@ -28,7 +28,7 @@ do
 done
 
 # Final check to ensure connection was successful before proceeding
-connected=$(adb devices | grep 'android-emulator-4:5548')
+connected=$(adb devices | grep 'android-emulator-4:5555')
 if [ -z "$connected" ]; then
     echo "Failed to connect to ADB after $MAX_RETRIES attempts."
     exit 1
