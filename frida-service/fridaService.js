@@ -45,18 +45,6 @@ async function run() {
     );
     let device;
     let pid;
-    for (const retry of _.range(0, 9999)) {
-      try {
-        device = await frida.getUsbDevice();
-        // current.device = device;
-        // console.log("[*] spawn()");
-        // pid = await device.spawn("com.traveloka.android");
-        break;
-      } catch (err) {
-        console.log("error message:", err.message);
-        await sleep(1000);
-      }
-    }
 
     const deviceCollection = (await frida.enumerateDevices()).filter(
       (device) => device.type === "usb"
