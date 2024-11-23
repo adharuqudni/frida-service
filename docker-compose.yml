@@ -22,7 +22,7 @@ services:
     hostname: android-emulator-1
     healthcheck:
       test: [ "CMD", "adb", "wait-for-device" ]
-      interval: 1m30s
+      interval: 5m
       timeout: 10s
       retries: 10
       start_period: 5m
@@ -49,7 +49,7 @@ services:
     hostname: android-emulator-2
     healthcheck:
       test: [ "CMD", "adb", "wait-for-device" ]
-      interval: 1m30s
+      interval: 5m
       timeout: 10s
       retries: 10
       start_period: 5m
@@ -79,7 +79,7 @@ services:
     hostname: android-emulator-3
     healthcheck:
       test: [ "CMD", "adb", "wait-for-device" ]
-      interval: 1m30s
+      interval: 5m
       timeout: 10s
       retries: 10
       start_period: 5m
@@ -109,7 +109,7 @@ services:
     hostname: android-emulator-4
     healthcheck:
       test: [ "CMD", "adb", "wait-for-device" ]
-      interval: 1m30s
+      interval: 5m
       timeout: 10s
       retries: 10
       start_period: 5m
