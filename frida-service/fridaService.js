@@ -25,8 +25,8 @@ function onError(error) {
 function onMessage(message, data) {
   if (message.type === "send") {
     const payload = message.payload;
-    const [index, splitMessage] = payload.split("/");
-    tokenCollection[index] = splitMessage;
+    const [index, ...splitMessage] = payload.split("/");
+    tokenCollection[index] = splitMessage.join('');
     const logging = {
       timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
       token: message.payload,
