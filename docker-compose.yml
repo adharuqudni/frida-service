@@ -212,6 +212,7 @@ services:
         condition: "service_healthy"
 
   frida-service:
+    mem_limit: 2g
     build:
       context: ./frida-service
     ports:
