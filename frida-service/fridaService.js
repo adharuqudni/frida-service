@@ -1,10 +1,10 @@
-const frida = require("frida");
-const fs = require("fs");
-const path = require("path");
-const util = require("util");
-const moment = require("moment");
-const express = require("express");
-const _ = require("lodash");
+const frida = require('frida');
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
+const moment = require('moment');
+const express = require('express');
+const _ = require('lodash');
 const app = express();
 const port = 3000;
 const readFile = util.promisify(fs.readFile);
@@ -14,7 +14,7 @@ const current = {
   script: null,
 };
 
-let tokenCollection = ["null", "null", "null", "null", "nulll"];
+let tokenCollection = ['null', 'null', 'null', 'null', 'null'];
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -23,16 +23,16 @@ function onError(error) {
   console.error(error.stack);
 }
 function onMessage(message, data) {
-  if (message.type === "send") {
+  if (message.type === 'send') {
     const payload = message.payload;
-    const [index, ...splitMessage] = payload.split("/");
+    const [index, ...splitMessage] = payload.split('/');
     tokenCollection[index] = splitMessage.join('/');
     const logging = {
-      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+      timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
       token: message.payload,
     };
     console.log(logging);
-  } else if (message.type === "error") {
+  } else if (message.type === 'error') {
     console.error(message.stack);
   }
 }
@@ -40,21 +40,21 @@ function onMessage(message, data) {
 async function run() {
   try {
     const source = await readFile(
-      path.join(__dirname, "fridascript.js"),
-      "utf8"
+      path.join(__dirname, 'fridascript.js'),
+      'utf8'
     );
     let device;
     let pid;
 
     const deviceCollection = (await frida.enumerateDevices()).filter(
-      (device) => device.type === "usb"
+      (device) => device.type === 'usb'
     );
     for (const [index, device] of deviceCollection.entries()) {
       for (const retry of _.range(0, 3600)) {
         try {
           console.log(device);
-          console.log("[*] spawn()");
-          pid = await device.spawn("com.traveloka.android");
+          console.log('[*] spawn()');
+          pid = await device.spawn('com.traveloka.android');
 
           current.pid = pid;
 
@@ -62,7 +62,7 @@ async function run() {
           const session = await device.attach(pid);
 
           session.detached.connect((reason) => {
-            console.log("Detached:", reason);
+            console.log('Detached:', reason);
           });
 
           const modifiedScript = source.replace(
@@ -78,27 +78,27 @@ async function run() {
           await device.resume(pid);
           break;
         } catch (err) {
-          console.log("error message:", err.message);
+          console.log('error message:', err.message);
           await sleep(3000);
         }
       }
     }
   } catch (err) {
-    console.log("error message:", err.message);
+    console.log('error message:', err.message);
     await sleep(10000);
   }
 }
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   const index = req.query.index || 0;
   res.send(tokenCollection[index]);
 });
 
-app.get("/health", (req, res) => {
+app.get('/health', (req, res) => {
   if (lastToken != null) {
-    res.status(200).send("Healthy");
+    res.status(200).send('Healthy');
   } else {
-    res.status(204).send("Empty, still running");
+    res.status(204).send('Empty, still running');
   }
 });
 
