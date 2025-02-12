@@ -1,43 +1,62 @@
 #!/bin/bash
 
-echo "Starting the ADB server and attempting to connect to emulator ..."
+echo "Starting the ADB server and attempting to connect to emulators ..."
 
 # Number of retries and delay between retries
 MAX_RETRIES=30
 RETRY_DELAY=20
 
-# Attempt to connect to ADB, retrying if it fails
+# Use the NUM_EMULATORS environment variable or default to 7 if not set
+NUM_EMULATORS=${NUM_EMULATORS:-7}  # Default to 7 if not set
+
+# Loop over the number of emulators
+for i in $(seq 1 $NUM_EMULATORS)
+do
+    echo "Attempting to connect to android-emulator-$i:5555"
+    adb connect "android-emulator-$i:5555"
+done
+
+# Attempt to connect to the last emulator first
 for i in $(seq 1 $MAX_RETRIES)
 do
-    adb connect android-emulator-1:5555
-    adb connect android-emulator-2:5555
-    adb connect android-emulator-3:5555
-    adb connect android-emulator-4:5555
-    adb connect android-emulator-5:5555
-    adb connect android-emulator-6:5555
-    adb connect android-emulator-7:5555
-    status=$(adb devices | grep 'android-emulator-7:5555' | awk '{print $2}')
-    
-   
-    if [ "$status" == "device" ]; then
-        echo "ADB connected successfully and device is ready."
+    # Loop through all emulators and check connection status
+    all_connected=true
+    for i in $(seq 1 $NUM_EMULATORS)
+    do
+        status=$(adb devices | grep "android-emulator-$i:5555" | awk '{print $2}')
+        
+        if [ "$status" != "device" ]; then
+            echo "ADB not connected to android-emulator-$i:5555. Retrying in $RETRY_DELAY seconds..."
+            all_connected=false
+            break
+        fi
+    done
+
+    # If all emulators are connected, break out of the loop
+    if [ "$all_connected" == true ]; then
+        echo "ADB connected successfully to all devices."
         break
-    elif [ "$status" == "offline" ]; then
-        echo "ADB connected, but the device is offline. Retrying in $RETRY_DELAY seconds..."
-    else
-        echo "ADB not connected. Retrying in $RETRY_DELAY seconds..."
     fi
+
     sleep $RETRY_DELAY
 done
 
 # Final check to ensure connection was successful before proceeding
-connected=$(adb devices | grep 'android-emulator-7:5555')
-if [ -z "$connected" ]; then
-    echo "Failed to connect to ADB after $MAX_RETRIES attempts."
+all_connected=true
+for i in $(seq 1 $NUM_EMULATORS)
+do
+    connected=$(adb devices | grep "android-emulator-$i:5555")
+    if [ -z "$connected" ]; then
+        echo "Failed to connect to android-emulator-$i after $MAX_RETRIES attempts."
+        all_connected=false
+    fi
+done
+
+if [ "$all_connected" == false ]; then
     exit 1
 fi
 
 sleep 60
 
 echo "Starting the Node.js service..."
-node /opt/fridaService.js
+node /opt/fridaService/fridaService.js
